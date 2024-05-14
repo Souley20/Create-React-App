@@ -1,4 +1,7 @@
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
+import { setCity } from "../../redux/citySlice.js"
 
 const Container = styled.div`
     position : absolute;
@@ -32,14 +35,23 @@ const Button = styled.button`
 
 export default function CityInput() {
 
+    const [inputValue, setInputValue] = useState()
+    const lang = useSelector((state) => state.lang.value)
+
+    const dispatch = useDispatch()
+
+    const changeCity = () => dispatch(setCity(inputValue))
+
+
     return (
         <Container>
             <Input
                 type='text'
-                placeholder="Nom de la ville"
+                placeholder={lang === 'fr' ? 'Nom de la ville' : 'City Name'}
+                onChange={(e) => { setInputValue(e.target.value) }}
             />
             <Button onClick={changeCity}>
-                "Changer de ville"
+                {lang === 'fr' ? 'Changer de ville' : 'Change City'}
             </Button>
         </Container>
     )
